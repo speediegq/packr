@@ -6,7 +6,7 @@ include main.mk
 
 default: ${NAME}
 
-src/${NAME}.o: src/${NAME}.c $(HEAD) clean
+src/${NAME}.o: src/${NAME}.c $(HEAD)
 	${CC} -c src/${NAME}.c -o src/${NAME}.o
 
 ${NAME}: src/${NAME}.o
@@ -15,14 +15,14 @@ ${NAME}: src/${NAME}.o
 clean:
 	rm -f src/*.o src/${NAME}
 
-install: all
+install: ${NAME}
 	[ -f src/${NAME} ] && cp -f src/${NAME} ${DESTDIR}${PREFIX}/bin || :
 	[ -f src/${NAME} ] && chmod +x ${DESTDIR}${PREFIX}/bin/${NAME} || :
 	@echo "Installed."
 
 dist: clean
 	mkdir -p packr-${VER}
-	cp src/ doc/ *.mk Makefile LICENSE README.md packr-${VER}
+	cp -r src/ doc/ *.mk Makefile LICENSE README.md packr-${VER}
 	tar -cf packr-${VER}.tar packr-${VER}
 	gzip packr-${VER}.tar
 	rm -rf packr-${VER}
