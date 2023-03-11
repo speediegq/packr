@@ -6,16 +6,14 @@ include main.mk
 
 default: ${NAME}
 
-src/${NAME}.o: src/${NAME}.c $(HEAD)
+src/${NAME}.o: src/${NAME}.c $(HEAD) clean
 	${CC} -c src/${NAME}.c -o src/${NAME}.o
 
 ${NAME}: src/${NAME}.o
 	${CC} src/${NAME}.o -o src/${NAME} ${LDFLAGS}
 
 clean:
-	rm -f src/${NAME}.o
-	rm -f src/${NAME}
-	@echo "Cleaned."
+	rm -f src/*.o src/${NAME}
 
 install: all
 	[ -f src/${NAME} ] && cp -f src/${NAME} ${DESTDIR}${PREFIX}/bin || :
