@@ -21,10 +21,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include "main.h"
 #include "main.c"
 
+// define some basic information
 #ifndef VERSION
 #define VERSION "unknown"
 #endif
@@ -32,6 +36,7 @@
 // declare functions
 static void help(int exitcode);
 static void readargs(int argcount, char *arg[]);
+static void prepareenv(void);
 
 void help(int exitcode) {
     fputs("packr [-i pkg] [-r pkg] [-u] [-v]\n"
@@ -55,8 +60,44 @@ void readargs(int argcount, char *arg[]) {
     return;
 }
 
+void prepareenv(void) {
+    const char *basename = "packr.conf";
+    const char *dirname = "/etc/packr";
+
+    char config[30];
+
+    if (!sprintf(config, "%s/%s", dirname, basename)) {
+        fprintf(stderr, "packr: failed to determine location of configuration file\n");
+        exit(1);
+    }
+
+    FILE *conf = fopen(config, "r");
+
+    if (conf) { // the file opens successfully which means it exists and has proper permissions
+        fclose(conf);
+        return;
+    }
+
+    if (geteuid() != 0) {
+        fprintf(stderr, "Superuser permissions required (to prepare packr environment).\n");
+        exit(1);
+    }
+
+    if (mkdir(dirname, 0755)) {
+        fprintf(stderr, "packr: could not create directory\n");
+        exit(1);
+    }
+
+    conf = fopen(config, "w"); // write it and immediately fclose it
+    fclose(conf);
+
+    return;
+}
+
 void main(int argc, char *argv[]) {
-    // start by reading args
+    prepareenv();
+
+    // reading arguments
     if (argc < 2) {
         help(1);
     } else {
