@@ -28,4 +28,11 @@ dist: clean
 	rm -rf packr-${VER}
 	@echo "Created packr-${VER}.tar.gz"
 
-.PHONY: clean all install dist default
+man:
+	command -v pandoc > /dev/null || exit 1
+	printf "%% ${NAME}(1) ${VER} | package manager for GNU/Linux\n" > .man.md
+	cat doc/docs.md >> .man.md
+	pandoc --standalone --to man .man.md -o ${NAME}.1
+	rm -f .man.md
+
+.PHONY: clean all install dist default man
