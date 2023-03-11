@@ -33,6 +33,19 @@ may interact with.
 
 Sign packages using PGP keys instead of some stupid weird format.
 
+- Clearly notify users of antifeatures
+
+Another area that many GNU/Linux distributions fail at is properly notifying
+users of proprietary licenses and antifeatures such as connecting to a
+server without the users's concent.
+
+Free software programs like the Kitty terminal have been shown to connect
+to servers in the past without notifying the users.
+
+Official repositories should also only contain free (as in freedom)
+software. Finally, work *against* nonfree programs by licensing
+Packr software under GPLv3 when possible.
+
 - The existing directory structure is fine, don't fix it.
 
 Don't put binaries in some stupid new directory. Package managers
@@ -49,10 +62,12 @@ Packr should be minimal, and it should be written in mostly C. Write certain
 things in shell, such as reading the packaging format, because the packaging
 format is shell based.
 
-- Do not bow down to normies.
+- Focus on power-users
 
-Packr should **not** ever bow down to normies. Packr is written with
-experienced users in mind who are willing to learn GNU/Linux and UNIX-like software.
+Packr should **not** ever sacrifice minimalism, code quality, speed or any other
+advantages in the name of making life easier for people new to GNU/Linux and
+UNIX-like software in general. Packr is written with experienced users in mind
+who are willing to learn GNU/Linux and UNIX-like software.
 
 A lot of software these days are written with people who are coming from
 operating systems like Windows in mind. This makes the software much, much
@@ -76,15 +91,3 @@ Once there are enough packages in the repositories, a distribution using only
 Packr may be created. One of the ways to get more packages in the repos
 is to make the creation of packages as easy and quick as possible.
 
-- Clearly notify users of antifeatures
-
-Another area that many GNU/Linux distributions fail at is properly notifying
-users of proprietary licenses and antifeatures such as connecting to a
-server without the users's concent.
-
-Free software programs like the Kitty terminal have been shown to connect
-to servers in the past without notifying the users.
-
-Official repositories should also only contain free (as in freedom)
-software. Finally, work *against* nonfree programs by licensing
-Packr software under GPLv3 when possible.
