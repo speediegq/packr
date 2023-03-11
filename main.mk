@@ -12,5 +12,5 @@ PREFIX = /usr
 #LIBS =
 
 CPPFLAGS = -DVERSION=\"${VER}\"
-CFLAGS   = -march=native -O2 -lX11 ${INCS} ${CPPFLAGS}
+CFLAGS   = -march=native -O2 ${INCS} ${CPPFLAGS}
 LDFLAGS  = ${LIBS} -g
